@@ -1,5 +1,5 @@
 from pathlib import Path
-from urllib.parse import urlparse, urlunparse
+from urllib.parse import urlparse
 from os import system, name
 import socket
 import requests
@@ -26,11 +26,16 @@ heade = {
     "DNT": "1",
     "Sec-GPC": "1"
 }
+
+
+def limpar():
+    system("cls" if name == "nt" else "clear")
+
 def grabb(url):
 
     req = requests.get(url, headers=heade, timeout=1)
 
-    return req.headers.get("Server")
+    return req.headers.geYt("Server")
 
 def url(url=str):
     while True:
@@ -49,9 +54,15 @@ def select1(url1):
         try:
             final_url = ensure_scheme_probe(url1) 
             ip_url = ip(url1)
-        except:
+        except ValueError:
+            print('O conteudo dever ser uma string!')
+            sys.exit()
+        except Exception as a:
+            limpar()
             print('ERRO ao criar a URL')
-            quit()
+            print('='*60)
+            print(f'{a}')
+            sys.exit()
 
         while True:
             caminhos = input('File name or path: ')
@@ -62,12 +73,7 @@ def select1(url1):
 
         resp = caminho(caminhos)
 
-        timp1 = timp()
-
-        if name == 'nt':
-            system('cls')
-        else:
-            system('clear')
+        limpar()
 
         print('*DIRPY 1.4')
         print('*Author Vortex')
@@ -82,7 +88,6 @@ def select1(url1):
         print('METHOD GET')
 
         for itens in lista:
-                time.sleep(timp1)
                 resposta = scan(final_url, itens)
                 if resposta == 200:
                     print(Fore.GREEN + f'[+] Directory found {itens}, status:', resposta )
@@ -101,16 +106,6 @@ def montar(domain=str, itens=str):
     url = (itens + '.' + domain)
     return url
 
-def timp():
-     while True:
-        try:
-            timp = float(input('Time: '))
-            return timp
-        except:
-            print('time = 1.0')
-            timp = 1.0
-            return timp
-
 def caminho(caminho):
         
     base = Path(__file__).resolve().parent
@@ -127,8 +122,11 @@ def caminho(caminho):
                         lista.append(linha2)
             return lista
         except FileNotFoundError:
-                    print('File Not Found')
-                    sys.exit()
+            print('File Not Found')
+            sys.exit()
+        except ValueError:
+            print('O conteudo dever ser uma string!')
+            sys.exit()
 
 def ip(url):
     ip = socket.gethostbyname(url)
@@ -204,10 +202,7 @@ try:
         break
 
     if select == 1:
-        if name == 'nt':
-            system('cls')
-        else:
-            system('clear')
+        limpar()
         url1 = url()
         select1(url1)
     else:
