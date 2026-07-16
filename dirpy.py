@@ -1,14 +1,13 @@
+from colorama import Fore
 from pathlib import Path
 from urllib.parse import urlparse
 from os import system, name
 import socket
 import requests
-import time
 import sys
-from colorama import Fore
+import traceback
 
 lista = []
-lista2 = []
 
 heade = {
     "User-Agent": (
@@ -32,10 +31,8 @@ def limpar():
     system("cls" if name == "nt" else "clear")
 
 def grabb(url):
-
     req = requests.get(url, headers=heade, timeout=1)
-
-    return req.headers.geYt("Server")
+    return req.headers.get("Server")
 
 def url(url=str):
     while True:
@@ -48,6 +45,10 @@ def url(url=str):
         except ValueError:
                 print('VARIAVEL NAO SUPORTADA')
                 continue      
+        except Exception:
+                limpar()
+                traceback.print_exc()
+                sys.exit()
 
 def select1(url1):
         
@@ -63,6 +64,9 @@ def select1(url1):
             print('='*60)
             print(f'{a}')
             sys.exit()
+        except Exception:
+            limpar()
+            traceback.print_exc()
 
         while True:
             caminhos = input('File name or path: ')
@@ -70,16 +74,10 @@ def select1(url1):
                  print('PATH VAZIO!')
                  continue
             break
-
-        resp = caminho(caminhos)
-
         limpar()
-
         print('*DIRPY 1.4')
         print('*Author Vortex')
-
         print('='*60)
-
         print('INFO ALVO')
         print(f'~ Site:{final_url} = [{ip_url}]')
         head = grabb(final_url)
@@ -112,7 +110,6 @@ def caminho(caminho):
 
     while True:
         try:
-
             arquivo = base / caminho
             print(arquivo)
 
@@ -127,13 +124,16 @@ def caminho(caminho):
         except ValueError:
             print('O conteudo dever ser uma string!')
             sys.exit()
+        except Exception:
+            traceback.print_exc()
+        
 
 def ip(url):
     ip = socket.gethostbyname(url)
     return ip
 
 def scan(url=str, itens=str):
-    resp = requests.get(url + itens, headers=heade, timeout=1)
+    resp = requests.get(url + itens, headers=heade, timeout=1, allow_redirects=True)
     if resp.status_code is None:
         return "Falha na Conexão"
     return resp.status_code
@@ -145,6 +145,8 @@ def ensure_scheme_probe(url: str, timeout: float = 3.0) -> str:
             print('URL VAZIA')
     except ValueError:
         print('Formato insuportavel use str')
+    except Exception:
+            traceback.print_exc()
 
     parsed = urlparse(url)
     if parsed.scheme in ("http", "https"):
@@ -155,9 +157,7 @@ def ensure_scheme_probe(url: str, timeout: float = 3.0) -> str:
     http_url = f"http://{host_and_path}"
 
     try:
-        resp = requests.head(https_url, allow_redirects=True, timeout=timeout, headers=heade)
-        if resp.status_code >= 400:
-            resp = requests.get(https_url, allow_redirects=True, timeout=timeout, headers=heade)
+        resp = requests.get(https_url, allow_redirects=True, timeout=timeout, headers=heade)
         final_scheme = urlparse(resp.url).scheme if resp else None
 
         if resp and resp.status_code < 400 and final_scheme == "https":
