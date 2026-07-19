@@ -1,72 +1,93 @@
 # DIRPY
 
-```
-888 88e   ,e,                           
-888 888b   "  888,8, 888 88e  Y8b Y888P 
-888 8888D 888 888 "  888 888b  Y8b Y8P  
-888 888P  888 888    888 888P   Y8b Y   
-888 88"   888 888    888 88"     888    
-                     888         888    
-                     888         888    
-```
+<p align="center">
+  <img src="assets/banner.png" width="600">
+</p>
 
-**DIRPY** é uma ferramenta simples de enumeração de diretórios desenvolvida em Python.
-Ela realiza testes de caminhos em aplicações web utilizando requisições HTTP GET e identifica possíveis diretórios e arquivos existentes através dos códigos de resposta HTTP.
+<h1 align="center">DIRPY</h1>
 
-> Projeto criado para fins educacionais e estudo de segurança web.
+<p align="center">
+  A lightweight directory enumeration tool written in Python.
+</p>
 
----
+<p align="center">
 
-## Funcionalidades
+![Python](https://img.shields.io/badge/Python-3-blue)
+![Security](https://img.shields.io/badge/Focus-Web%20Security-red)
+![Platform](https://img.shields.io/badge/Platform-Linux-lightgrey)
 
-* Scanner de diretórios baseado em wordlist.
-* Suporte para URLs HTTP e HTTPS.
-* Detecção automática de esquema (`http://` ou `https://`).
-* Resolução de IP do domínio.
-* Identificação do servidor web através do header `Server`.
-* Tratamento de códigos HTTP:
-
-  * `200` → Diretório encontrado.
-  * `301/302/307/308` → Redirecionamento.
-  * `403/405/501` → Possível diretório protegido.
-  * `404` → Não encontrado.
-* Timeout para evitar travamentos.
-* Interface no terminal com cores.
+</p>
 
 ---
 
-## Requisitos
+## About
+
+**DIRPY** is a simple web directory enumeration tool developed in Python.
+
+It performs HTTP GET requests against a target website using a wordlist and identifies possible directories and files based on HTTP response codes.
+
+This project was created for **learning purposes, Python development, and web security studies**.
+
+---
+
+## Features
+
+* Directory and file enumeration.
+* HTTP/HTTPS support.
+* Automatic URL scheme detection.
+* Domain IP resolution.
+* Web server detection using HTTP headers.
+* Wordlist-based scanning.
+* HTTP status code analysis.
+* Colored terminal output.
+* Request timeout protection.
+* Error handling.
+
+---
+
+## HTTP Status Detection
+
+| Status Code       | Meaning                         |
+| ----------------- | ------------------------------- |
+| `200`             | Directory or file found         |
+| `301/302/307/308` | Redirect detected               |
+| `403/405/501`     | Forbidden or protected resource |
+| `404`             | Not found                       |
+
+---
+
+## Requirements
 
 * Python 3.10+
 
-Bibliotecas utilizadas:
+Dependencies:
 
 * requests
 * colorama
 
 ---
 
-## Instalação
+## Installation
 
-Clone o repositório:
+Clone the repository:
 
 ```bash
-git clone https://github.com/seu_usuario/DIRPY.git
+git clone https://github.com/yourusername/DIRPY.git
 ```
 
-Entre no diretório:
+Enter the directory:
 
 ```bash
 cd DIRPY
 ```
 
-Instale as dependências:
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Ou manualmente:
+or:
 
 ```bash
 pip install requests colorama
@@ -74,45 +95,47 @@ pip install requests colorama
 
 ---
 
-## Uso
+## Usage
 
-Execute:
+Run the tool:
 
 ```bash
 python3 dirpy.py
 ```
 
-Escolha a opção:
+Select the scanner:
 
 ```
 [1] dir scan
 ```
 
-Informe o alvo:
+Enter the target:
 
 ```
-Url: exemplo.com
+Url: example.com
 ```
 
-Informe a wordlist:
+Enter your wordlist:
 
 ```
 File name or path: wordlist.txt
 ```
 
-O scanner começará a testar os caminhos.
+DIRPY will start checking possible paths.
 
 ---
 
-## Exemplo de saída
+## Example Output
 
-```
+```text
 *DIRPY 1.4
 *Author Vortex
 ============================================================
-INFO ALVO
-~ Site:https://example.com = [93.xxx.xxx.xxx]
-~ Server:[nginx]
+TARGET INFORMATION
+
+~ Site: https://example.com = [93.xxx.xxx.xxx]
+~ Server: [nginx]
+
 ============================================================
 METHOD GET
 
@@ -120,60 +143,61 @@ METHOD GET
 
 [~] Redirect page /login, status: 302
 
-Forbidden/Unauthorized (possible protected dir) /private 403
+Forbidden/Unauthorized /private status: 403
 ```
 
 ---
 
-## Estrutura do projeto
+## Project Structure
 
 ```
 DIRPY/
 │
 ├── dirpy.py
 ├── wordlist.txt
+├── requirements.txt
 ├── README.md
-└── requirements.txt
+└── assets/
+    └── banner.png
 ```
 
 ---
 
-## Tecnologias utilizadas
+## Technologies
 
 * Python
 * Requests
-* HTTP
-* Socket
+* HTTP Protocol
+* Socket Programming
 * Pathlib
 
 ---
 
-## Melhorias futuras
+## Future Improvements
 
-Possíveis funcionalidades para versões futuras:
-
-* [ ] Scan multithread.
-* [ ] Suporte para extensões (`.php`, `.html`, `.txt`).
-* [ ] Exportação dos resultados.
-* [ ] Argumentos via CLI usando argparse.
-* [ ] Barra de progresso.
-* [ ] Detecção de WAF.
-* [ ] Suporte para múltiplas URLs.
-
----
-
-## Aviso
-
-Esta ferramenta foi criada para **estudo, aprendizado e testes autorizados**.
-
-Não utilize contra sistemas sem permissão.
-
-O usuário é responsável pelo uso da ferramenta.
+* [ ] Multithreaded scanning.
+* [ ] CLI arguments with argparse.
+* [ ] Custom extensions support.
+* [ ] Result export.
+* [ ] Progress bar.
+* [ ] WAF detection.
+* [ ] Multiple target scanning.
+* [ ] Better wordlist management.
 
 ---
 
-## Autor
+## Disclaimer
+
+DIRPY was created for **educational purposes only**.
+
+Do not use this tool against systems without proper authorization.
+
+The user is responsible for how this software is used.
+
+---
+
+## Author
 
 **Vortex**
 
-Projeto desenvolvido para aprendizado em Python e segurança web.
+Developed for learning Python programming and cybersecurity.
