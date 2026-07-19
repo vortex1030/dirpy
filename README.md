@@ -153,8 +153,7 @@ Forbidden/Unauthorized /private status: 403
 ```
 DIRPY/
 │
-├── dirpy.py
-├── wordlist.txt
+├── main.py
 ├── requirements.txt
 ├── README.md
 └── assets/
