@@ -51,7 +51,7 @@ def url(url=str):
                 sys.exit()
 
 def select1(url1):
-        
+    try:  
         try:
             final_url = ensure_scheme_probe(url1) 
             ip_url = ip(url1)
@@ -70,17 +70,18 @@ def select1(url1):
 
         while True:
             caminhos = input('File name or path: ')
+            lista = caminho(caminhos)
             if not caminhos:
                  print('PATH VAZIO!')
                  continue
             break
         limpar()
+        head = grabb(final_url)
         print('*DIRPY 1.4')
         print('*Author Vortex')
         print('='*60)
         print('INFO ALVO')
         print(f'~ Site:{final_url} = [{ip_url}]')
-        head = grabb(final_url)
         print(f"~ Server:[{head}]")
         print('='*60)
         print('METHOD GET')
@@ -98,7 +99,11 @@ def select1(url1):
                 else:
                     print(f'[~] {final_url}{itens}:', resposta)
 
-        print('-'*60)
+                print('-'*60)
+    except KeyboardInterrupt:
+        print('Intermediate process: KeyboardInterrupt')
+    except Exception:
+        print(traceback.print_exc())
 
 def montar(domain=str, itens=str):
     url = (itens + '.' + domain)
@@ -170,7 +175,7 @@ def ensure_scheme_probe(url: str, timeout: float = 3.0) -> str:
         pass
 
     try:
-        resp = requests.head(http_url, allow_redirects=True, timeout=timeout)
+        resp = requests.get(http_url, allow_redirects=True, timeout=timeout)
         if resp.status_code >= 400:
             resp = requests.get(http_url, allow_redirects=True, timeout=timeout)
         if resp and resp.status_code < 400:
@@ -210,3 +215,5 @@ try:
 
 except KeyboardInterrupt:
     print('Intermediate process: KeyboardInterrupt')
+except Exception:
+    print(traceback.print_exc())
